@@ -1,0 +1,50 @@
+openapi: 3.0.0
+info:
+  title: LoginID API 
+  description: LoginID documentation 
+  version: 1.0.0
+  # Contact information: name, email, URL.
+  contact:
+    name: LoginID Support
+    email: support@loginid.io
+    url: https://loginid.io
+  # Name of the license and a URL to the license description.
+  license:
+    name: LoginID
+    url: https://loginid.io
+paths:
+  # OpenAPI documents all need a paths element
+  /user/{username}/cred:
+    get:
+      summary: List all user credential
+      parameters:
+        - in: header
+          name: Authorization
+          description: Authorization token
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: username
+          description: Username 
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: An array of credentials  
+          content:
+            application/json:    
+              schema:
+                type: array
+                items: 
+                  type: object
+                  properties: 
+                    id:
+                      type: string
+                      example: guuid
+                    desc:
+                      type: string
+                      example: android samsung
+
