@@ -18,12 +18,6 @@ paths:
     get:
       summary: Get user information and list of credentials 
       parameters:
-        - in: header
-          name: Authorization
-          description: Authorization token
-          required: true
-          schema:
-            type: string
         - in: query 
           name: username
           description: Username of user to be query
@@ -87,13 +81,6 @@ paths:
   /manage/user/status:
     post:
       summary: Update user status 
-      parameters:
-        - in: header
-          name: Authorization
-          description: Authorization token
-          required: true
-          schema:
-            type: string
       requestBody:
         description: Parameters to update user status of an Namespace ID organization 
         required: true
@@ -151,13 +138,6 @@ paths:
   /manage/user/credential:
     delete:
       summary: Remove a user credential 
-      parameters:
-        - in: header
-          name: Authorization
-          description: Authorization token
-          required: true
-          schema:
-            type: string
       requestBody:
         description: Parameters to update user status of an Namespace ID organization 
         required: true
@@ -206,7 +186,57 @@ paths:
                   message:
                     type: string
                     example: Internal server error 
-
+  /fido/user/add-credential/init:
+    post:
+      summary: Front-end api call - Adding new user FIDO credential init phase 
+      requestBody:
+        description: Parameters to initialize credential creation challenge
+        required: true
+        content:
+          application/json:
+            schema:  
+              type: object
+              properties:
+                nid:
+                  type: string
+                  description: Namespace ID of a client organization
+                clientid:
+                  type: string
+                  description: Client ID is identifier for integration type - direct , mobile
+                username:
+                  type: string
+                  description: User name identifier  
+      responses:
+        '200':
+          description: Return FIDO webauthn creation option  
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  challenge: 
+                    type: string
+                    example: 2bb131a2-070f-4fd6-9faf-85e9aa993fa0
+        '4XX':
+          description: Error returns from application related problem
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Username not found 
+        '5XX':
+          description: Error returns from system related problem 
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error 
 # 1) Define the security scheme type (HTTP bearer)
 components:
   securitySchemes:
