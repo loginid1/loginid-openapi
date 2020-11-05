@@ -32,8 +32,10 @@ paths:
             type: string
         - in: query
           name: nid
-          description: Namespace ID of user organization    
-
+          description: Namespace ID of user organization
+          required: true
+          schema:
+            type: string    
       responses:
         '200':
           description: Return user entity object  
@@ -51,14 +53,15 @@ paths:
                     created:
                       type: int64
                       example:   12341341412  
-                    credentials: array
-                      items: 
-                        type: object
-                        properties: 
-                          id:
-                            type: string
-                            example: 9449b8bb-e7a4-4e76-8d20-1c0c732c6b7f
-                          desc:
-                            type: string
-                            example: Android Samsung s9
+                    credentials: 
+                      type: array
+                        items: 
+                          type: object
+                          properties: 
+                            id:
+                              type: string
+                              example: 9449b8bb-e7a4-4e76-8d20-1c0c732c6b7f
+                            desc:
+                              type: string
+                              example: Android Samsung s9
 
