@@ -189,7 +189,7 @@ paths:
   # Add new FIDO credential                   
   /fido/user/add-credential/init:
     post:
-      summary: Adding new user FIDO credential (init phase) 
+      summary: A) Adding new user FIDO credential (init phase) 
       requestBody:
         description: Parameters to initialize credential creation challenge
         required: true
@@ -263,10 +263,11 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Internal server error 
+                    example: Internal server error
+                     
   /fido/user/add-credential/complete:
     post:
-      summary: Adding new user FIDO credential (complete phase) 
+      summary: B) Adding new user FIDO credential (complete phase) 
       requestBody:
         description: Attestation parameters for FIDO credential creation 
         required: true
