@@ -14,9 +14,9 @@ info:
     url: https://loginid.io
 paths:
   # OpenAPI documents all need a paths element
-  /user/{username}/cred:
+  /manage/user:
     get:
-      summary: List all user credential
+      summary: Get user information and list of credentials 
       parameters:
         - in: header
           name: Authorization
@@ -24,27 +24,41 @@ paths:
           required: true
           schema:
             type: string
-        - in: path
+        - in: query 
           name: username
-          description: Username 
+          description: Username of user to be query
           required: true
           schema:
             type: string
+        - in: query
+          name: nid
+          description: Namespace ID of user organization    
 
       responses:
         '200':
-          description: An array of credentials  
+          description: Return user entity object  
           content:
             application/json:    
               schema:
-                type: array
-                items: 
-                  type: object
-                  properties: 
-                    id:
+                type: object
+                  properties:
+                    id: 
                       type: string
-                      example: guuid
-                    desc:
+                      example: 2bb131a2-070f-4fd6-9faf-85e9aa993fa0
+                    status:
                       type: string
-                      example: android samsung
+                      example: active
+                    created:
+                      type: int64
+                      example:   12341341412  
+                    credentials: array
+                      items: 
+                        type: object
+                        properties: 
+                          id:
+                            type: string
+                            example: 9449b8bb-e7a4-4e76-8d20-1c0c732c6b7f
+                          desc:
+                            type: string
+                            example: Android Samsung s9
 
