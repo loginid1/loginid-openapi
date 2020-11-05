@@ -16,7 +16,7 @@ paths:
   # OpenAPI documents all need a paths element
   /manage/user:
     get:
-      summary: Get user information and list of credentials 
+      summary: 1.1) Get user information and list of credentials 
       parameters:
         - in: query 
           name: username
@@ -80,7 +80,7 @@ paths:
                     example: Internal server error 
   /manage/user/status:
     post:
-      summary: Update user status 
+      summary: 1.2) Update user status 
       requestBody:
         description: Parameters to update user status of an Namespace ID organization 
         required: true
@@ -137,7 +137,7 @@ paths:
                     example: Internal server error
   /manage/user/credential:
     delete:
-      summary: Remove a user credential 
+      summary: 1.3) Remove a user credential 
       requestBody:
         description: Parameters to update user status of an Namespace ID organization 
         required: true
@@ -189,7 +189,7 @@ paths:
   # Add new FIDO credential                   
   /fido/user/add-credential/init:
     post:
-      summary: A) Adding new user FIDO credential (init phase) 
+      summary: 2.1) Adding new user FIDO credential (init phase) 
       requestBody:
         description: Parameters to initialize credential creation challenge
         required: true
@@ -267,7 +267,7 @@ paths:
                      
   /fido/user/add-credential/complete:
     post:
-      summary: B) Adding new user FIDO credential (complete phase) 
+      summary: 2.2) Adding new user FIDO credential (complete phase) 
       requestBody:
         description: Attestation parameters for FIDO credential creation 
         required: true
