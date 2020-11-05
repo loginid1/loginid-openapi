@@ -186,9 +186,10 @@ paths:
                   message:
                     type: string
                     example: Internal server error 
+  # Add new FIDO credential                   
   /fido/user/add-credential/init:
     post:
-      summary: Front-end api call - Adding new user FIDO credential init phase 
+      summary: Adding new user FIDO credential (init phase) 
       requestBody:
         description: Parameters to initialize credential creation challenge
         required: true
@@ -197,9 +198,6 @@ paths:
             schema:  
               type: object
               properties:
-                nid:
-                  type: string
-                  description: Namespace ID of a client organization
                 clientid:
                   type: string
                   description: Client ID is identifier for integration type - direct , mobile
@@ -216,7 +214,36 @@ paths:
                 properties:
                   challenge: 
                     type: string
-                    example: 2bb131a2-070f-4fd6-9faf-85e9aa993fa0
+                    example: 2bb131a2070f4fd69faf85e9aa993fa0
+                  uid:
+                    type: string
+                    example: 13851066-c8f7-4b42-b434-7d717fa2567f
+                  rp:
+                    type: object
+                    properties:
+                      id: 
+                        type: string
+                        example: loginid.io
+                      name:
+                        type: string
+                        example: LoginID Inc
+                  user:
+                    type: object
+                    properties:
+                      id: 
+                        type: string
+                        example: 6f740f48-88a8-413f-ac2f-776affd0ff57
+                      name: 
+                        type: string
+                        example: pd           
+                  excludeCredentials:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: e513d696-9ca5-4275-9c4d-e0734ea6084a
         '4XX':
           description: Error returns from application related problem
           content:
@@ -226,7 +253,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Username not found 
+                    example: Username not available 
         '5XX':
           description: Error returns from system related problem 
           content:
@@ -237,6 +264,72 @@ paths:
                   message:
                     type: string
                     example: Internal server error 
+  /fido/user/add-credential/complete:
+    post:
+      summary: Adding new user FIDO credential (complete phase) 
+      requestBody:
+        description: Attestation parameters for FIDO credential creation 
+        required: true
+        content:
+          application/json:
+            schema:  
+              type: object
+              properties:
+                clientid:
+                  type: string
+                  description: Client ID is identifier for integration type - direct , mobile
+                username:
+                  type: string
+                  description: User name identifier
+                keyHandle:
+                  type: string
+                  description: keyHandle is a FIDO rawID returns by the authenticator (base64url encoding)
+                challenge:
+                  type: string
+                  description: challenge value passed from init phase 
+                clientData:
+                  type: string
+                  description: client JSON data returns by the authenticator (base64url encoding)   
+                attestData:
+                  type: string 
+                  description: attestation data returns by the authenticator (base64url encoding)    
+      responses:
+        '200':
+          description: Return FIDO webauthn creation success 
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  jwt: 
+                    type: string
+                    example: 2bb131a2070f4fd69faf85e9aa993fa0.faf85e9aa993fa0.faf85e9aa993fa0
+                  uid:
+                    type: string
+                    example: 13851066-c8f7-4b42-b434-7d717fa2567f
+                  username:
+                    type: string
+                    example: loginid 
+        '4XX':
+          description: Error returns from application related problem
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Username not available 
+        '5XX':
+          description: Error returns from system related problem 
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error                                         
 # 1) Define the security scheme type (HTTP bearer)
 components:
   securitySchemes:
