@@ -43,25 +43,163 @@ paths:
             application/json:    
               schema:
                 type: object
-                  properties:
-                    id: 
-                      type: string
-                      example: 2bb131a2-070f-4fd6-9faf-85e9aa993fa0
-                    status:
-                      type: string
-                      example: active
-                    created:
-                      type: int64
-                      example:   12341341412  
-                    credentials: 
-                      type: array
-                        items: 
-                          type: object
-                          properties: 
-                            id:
-                              type: string
-                              example: 9449b8bb-e7a4-4e76-8d20-1c0c732c6b7f
-                            desc:
-                              type: string
-                              example: Android Samsung s9
-
+                properties:
+                  id: 
+                    type: string
+                    example: 2bb131a2-070f-4fd6-9faf-85e9aa993fa0
+                  status:
+                    type: string
+                    example: active
+                  created:
+                    type: integer 
+                    example:   12341341412  
+                  credentials: 
+                    type: array
+                    items: 
+                      type: object
+                      properties: 
+                        id:
+                          type: string
+                          example: 9449b8bb-e7a4-4e76-8d20-1c0c732c6b7f
+                        desc:
+                          type: string
+                          example: Android Samsung s9
+        '4XX':
+          description: Error returns from application related problem
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Username not found 
+        '5XX':
+          description: Error returns from system related problem 
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error 
+  /manage/user/status:
+    post:
+      summary: Update user status 
+      parameters:
+        - in: header
+          name: Authorization
+          description: Authorization token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Parameters to update user status of an Namespace ID organization 
+        required: true
+        content:
+          application/json:
+            schema:  
+              type: object
+              properties:
+                nid:
+                  type: string
+                  description: Namespace ID of a client organization
+                username:
+                  type: string
+                  description: User identifier   
+      responses:
+        '200':
+          description: Return user entity object  
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  id: 
+                    type: string
+                    example: 2bb131a2-070f-4fd6-9faf-85e9aa993fa0
+                  status:
+                    type: string
+                    example: active
+                  created:
+                    type: integer 
+                    example:   12341341412  
+        '4XX':
+          description: Error returns from application related problem
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Username not found 
+        '5XX':
+          description: Error returns from system related problem 
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error
+  /manage/user/credential:
+    delete:
+      summary: Remove a user credential 
+      parameters:
+        - in: header
+          name: Authorization
+          description: Authorization token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Parameters to update user status of an Namespace ID organization 
+        required: true
+        content:
+          application/json:
+            schema:  
+              type: object
+              properties:
+                nid:
+                  type: string
+                  description: Namespace ID of a client organization
+                username:
+                  type: string
+                  description: User name identifier  
+                credential:
+                  type: string
+                  description: User credential identifier  
+      responses:
+        '200':
+          description: Return credential status  
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  id: 
+                    type: string
+                    example: 2bb131a2-070f-4fd6-9faf-85e9aa993fa0
+        '4XX':
+          description: Error returns from application related problem
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Username not found 
+        '5XX':
+          description: Error returns from system related problem 
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error 
